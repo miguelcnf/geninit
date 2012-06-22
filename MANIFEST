@@ -1,0 +1,7 @@
+Makefile.PL
+MANIFEST
+geninit
+lib/GenInit.pm
+lib/GenInit/Core.pm
+conf/geninit.sample
+META.yml                                 Module meta-data (added by MakeMaker)

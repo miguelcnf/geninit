@@ -1,0 +1,29 @@
+#!/usr/bin/env perl
+
+use strict;
+use Error qw(:try);
+use Sys::Syslog;
+use File::Basename;
+use lib dirname($0)."/lib";
+use GenInit::Core;
+
+# Not the most reliable way to get the arguments but eh...
+my $prog = $ARGV[0];
+my $path_to_prog = $ARGV[1];
+my $start_opts;
+if(!$ARGV[2]){$start_opts = "";}else{$start_opts = $ARGV[2];}
+
+try {
+	my $geninit = GenInit::Core->new(
+		prog => $prog,
+		path_to_prog => $path_to_prog,
+		start_opts  => $start_opts,
+	);
+	$geninit->generate_init();
+}
+
+catch Error with {
+	my $ex = shift;
+	print "Error catched: $ex->{-text}\n";
+	syslog("info", "$ex->{-text}");
+}
