@@ -3,6 +3,7 @@
 # %%NAME%%    This init script takes care of starting and stopping %%NAME%%.
 #
 # chkconfig: - 60 50
+# description: %%NAME%%
 # processname: %%NAME%%
 
 # Source function library.
