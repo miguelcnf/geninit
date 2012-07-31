@@ -14,15 +14,15 @@
 
 RETVAL=0
 prog="%%NAME%%"
-path_to_prog="%%PATH%%"
-start_opts="%%START%%"
+start_action="%%START%%"
+stop_action="%%STOP%%"
 
 start() {
         # Start daemon
         [ -x $path_to_prog ] || exit 4
 
         echo -n $"Starting $prog: "
-        daemon $path_to_prog $start_opts
+        daemon $start_action
         RETVAL=$?
         [ $RETVAL -eq 0 ] && touch /var/lock/subsys/$prog
 	echo
@@ -32,7 +32,7 @@ start() {
 stop() {
         # Stop daemons.
         echo -n $"Shutting down $prog: "
-        killproc $prog
+	$stop_action
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$prog

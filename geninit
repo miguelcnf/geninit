@@ -9,15 +9,15 @@ use GenInit::Core;
 
 # Not the most reliable way to get the arguments but eh...
 my $prog = $ARGV[0];
-my $path_to_prog = $ARGV[1];
-my $start_opts;
-if(!$ARGV[2]){$start_opts = "";}else{$start_opts = $ARGV[2];}
+my $start_action = $ARGV[1];
+my $stop_action;
+if(!$ARGV[2]){$stop_action = "killproc \$prog";}else{$stop_action = $ARGV[2];}
 
 try {
 	my $geninit = GenInit::Core->new(
 		prog => $prog,
-		path_to_prog => $path_to_prog,
-		start_opts  => $start_opts,
+		start_action => $start_action,
+		stop_action => $stop_action,
 	);
 	$geninit->generate_init();
 }

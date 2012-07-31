@@ -8,11 +8,15 @@ USAGE
 
 Run the command:
 
-	./geninit name_of_the_daemon_process path_to_the_daemon [start_options]
+	./geninit name_of_the_daemon_process start_action [stop_action]
 
-Example:
+Example 1 - with stop action:
 
-	./geninit "zabbix_agentd" "/usr/local/sbin/zabbix_agentd" "-c /etc/zabbix/zabbix_agentd.conf"
+	./geninit "bazinga" "/usr/local/sbin/bazinga --action start" "/usr/local/sbin/bazinga --action stop"
+
+Example 2 - without stop action (using "killproc name_of_the_daemon_process" to stop):
+
+	./geninit "bazinga" "/usr/local/sbin/bazinga --action start"
 
 DOCUMENTATION
 =============

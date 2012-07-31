@@ -15,7 +15,7 @@ GenInit - Generates the init script.
 =head1 SYNOPSIS
 
 	use GenInit::Core;
-	new(prog => $prog, path_to_prog => $path_to_prog, start_opts = $start_opts);
+	new(prog => $prog, start_action => $start_action, stop_action => $stop_action);
 	generate_init();
 
 =head1 DESCRIPTION
@@ -30,7 +30,7 @@ The following functions are exported by default
 
 =head3 new
 
-	new(prog => $prog, path_to_prog => $path_to_prog, start_opts = $start_opts);
+	new(prog => $prog, start_action => $start_action, stop_action => $stop_action);
 
 Instantiate a GenInit object with information regarding the path of the daemon and the start options.
 
@@ -43,11 +43,10 @@ sub new {
 	
 	my $prog = $args{prog}; if(!$prog){die "You must provide a \$prog argument on $class!\n";}
 	$self->{prog} = $prog;
-	my $path_to_prog = $args{path_to_prog}; if(!$path_to_prog){die "You must provide a \$path_to_prog argument on $class!\n";}
-	unless( -e $path_to_prog){die "File not found: $path_to_prog on $class!\n";}
-	$self->{path_to_prog} = $path_to_prog;
-	my $start_opts = exists $args{start_opts} ? $args{start_opts} : ""; if(!$start_opts){die "You must provide a \$start_opts argument on $class!\n";}
-	$self->{start_opts} = $start_opts;
+	my $start_action = $args{start_action}; if(!$start_action){die "You must provide a \$start_action argument on $class!\n";}
+	$self->{start_action} = $start_action;
+	my $stop_action = $args{stop_action}; 
+	$self->{stop_action} = $stop_action;
 	
 	return $self;
 }
@@ -75,8 +74,8 @@ sub generate_init {
 		seek FILE,0,0;
 		foreach my $file (@file){
 			$file =~ s/\%\%NAME\%\%/$self->{prog}/g;
-			$file =~ s/\%\%PATH\%\%/$self->{path_to_prog}/g;
-			$file =~ s/\%\%START\%\%/$self->{start_opts}/g;
+			$file =~ s/\%\%START\%\%/$self->{start_action}/g;
+			$file =~ s/\%\%STOP\%\%/$self->{stop_action}/g;
 			print FILE $file;
 		}
 		close FILE;
