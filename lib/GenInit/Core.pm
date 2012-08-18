@@ -85,6 +85,7 @@ sub generate_init {
 		my $ex = shift;
 		print "Error catched: $ex->{-text}\n";
 		syslog("info", $ex->{-text});
+        exit 1;
 	}
 }
 
