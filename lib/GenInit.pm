@@ -50,7 +50,7 @@ Perl module to quickly generate init scripts for custom daemons.
 
 =head1 DESCRIPTION
 
-GenInit is a perl module/script that tries to simplify the proccess of creating init scripts for custom daemons.
+GenInit is a perl module that tries to simplify the proccess of creating init scripts for custom daemons.
 
 =head2 EXPORT
 
