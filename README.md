@@ -1,7 +1,7 @@
 geninit
 =======
 
-Perl module to quickly generate init scripts for custom daemons.
+Quickly generate init scripts for custom daemons.
 
 USAGE
 =====
@@ -21,7 +21,7 @@ Example 2 - without stop action (using "killproc name_of_the_daemon_process" to 
 DOCUMENTATION
 =============
 
-Documentation for this module available with the perldoc command.
+Documentation for the GenInit module available with the perldoc command.
 
 	perldoc lib/GenInit.pm
 
