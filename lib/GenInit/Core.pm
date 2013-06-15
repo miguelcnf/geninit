@@ -30,63 +30,61 @@ The following functions are exported by default
 
 =head3 new
 
-	new(prog => $prog, start_action => $start_action, stop_action => $stop_action);
+  new(prog => $prog, start_action => $start_action, stop_action => $stop_action);
 
 Instantiate a GenInit object with information regarding the path of the daemon and the start options.
 
 =cut
 
 sub new {
-	
-	my($class, %args) = @_;
-	my $self = bless({}, $class);
-	
-	my $prog = $args{prog}; if(!$prog){die "You must provide a \$prog argument on $class!\n";}
-	$self->{prog} = $prog;
-	my $start_action = $args{start_action}; if(!$start_action){die "You must provide a \$start_action argument on $class!\n";}
-	$self->{start_action} = $start_action;
-	my $stop_action = $args{stop_action}; 
-	$self->{stop_action} = $stop_action;
-	
-	return $self;
+  my($class, %args) = @_;
+  my $self = bless({}, $class);
+
+  my $prog = $args{prog}; if(!$prog){die "You must provide a \$prog argument on $class!\n";}
+  $self->{prog} = $prog;
+  my $start_action = $args{start_action}; if(!$start_action){die "You must provide a \$start_action argument on $class!\n";}
+  $self->{start_action} = $start_action;
+  my $stop_action = $args{stop_action}; 
+  $self->{stop_action} = $stop_action;
+
+  return $self;
 }
 
 =head3 generate_init
 
-	generate_init();
+  generate_init();
 
 Process the information and generate the init script based on the sample config.
 
 =cut
 
 sub generate_init {
-	
-	my $self = shift;
-	my $class = ref $self;
-	my $sample_file = "./conf/geninit.sample";	
-	my $init_file = $self->{prog};
+  my $self = shift;
+  my $class = ref $self;
+  my $sample_file = "./conf/geninit.sample";
+  my $init_file = $self->{prog};
 
-	try {
-		copy($sample_file, $init_file) or die "Copy file failed: $! on $class!\n";
+  try {
+    local $/;
+    open (FILE, "<$sample_file") or die "Can't open file: $sample_file on $class!\n";
+    my $file = <FILE>;
+    close (FILE);
 
-		open (FILE, "+<$init_file") or die "Can't open file: $init_file on $class!\n";
-		my @file = <FILE>;
-		seek FILE,0,0;
-		foreach my $file (@file){
-			$file =~ s/\%\%NAME\%\%/$self->{prog}/g;
-			$file =~ s/\%\%START\%\%/$self->{start_action}/g;
-			$file =~ s/\%\%STOP\%\%/$self->{stop_action}/g;
-			print FILE $file;
-		}
-		close FILE;
-	}
-	
-	catch Error with {
-		my $ex = shift;
-		print "Error catched: $ex->{-text}\n";
-		syslog("info", $ex->{-text});
-        exit 1;
-	}
+    $file =~ s/\%\%NAME\%\%/$self->{prog}/g;
+    $file =~ s/\%\%START\%\%/$self->{start_action}/g;
+    $file =~ s/\%\%STOP\%\%/$self->{stop_action}/g;
+
+    open (FILE, ">$init_file") or die "Can't open file: $init_file on $class!\n";
+    print FILE $file;
+    close (FILE);
+  }
+
+  catch Error with {
+    my $ex = shift;
+    print "Error catched: $ex->{-text}\n";
+    syslog("info", $ex->{-text});
+    exit 1;
+  }
 }
 
 1;
