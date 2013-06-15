@@ -14,17 +14,17 @@ my $stop_action;
 if(!$ARGV[2]){$stop_action = "killproc \$prog";}else{$stop_action = $ARGV[2];}
 
 try {
-	my $geninit = GenInit::Core->new(
-		prog => $prog,
-		start_action => $start_action,
-		stop_action => $stop_action,
-	);
-	$geninit->generate_init();
+  my $geninit = GenInit::Core->new(
+    prog => $prog,
+    start_action => $start_action,
+    stop_action => $stop_action,
+  );
+  $geninit->generate_init();
 }
 
 catch Error with {
-	my $ex = shift;
-	print "Error catched: $ex->{-text}\n";
-	syslog("info", "$ex->{-text}");
-    exit 1;
+  my $ex = shift;
+  print "Error catched: $ex->{-text}\n";
+  syslog("info", "$ex->{-text}");
+  exit 1;
 }
