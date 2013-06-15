@@ -8,22 +8,22 @@ USAGE
 
 Run the command:
 
-  ./geninit name_of_the_daemon_process start_action [stop_action]
+  `./geninit name_of_the_daemon_process start_action [stop_action]`
 
 Example 1 - with stop action:
 
-  ./geninit "bazinga" "/usr/local/sbin/bazinga --action start" "/usr/local/sbin/bazinga --action stop"
+  `./geninit "bazinga" "/usr/local/sbin/bazinga --action start" "/usr/local/sbin/bazinga --action stop"`
 
 Example 2 - without stop action (using "killproc name_of_the_daemon_process" to stop):
 
-  ./geninit "bazinga" "/usr/local/sbin/bazinga --action start"
+  `./geninit "bazinga" "/usr/local/sbin/bazinga --action start"`
 
 DOCUMENTATION
 =============
 
 Documentation for the GenInit module available with the perldoc command.
 
-  perldoc lib/GenInit.pm
+  `perldoc lib/GenInit.pm`
 
 LICENSE AND COPYRIGHT
 =====================
