@@ -25,9 +25,7 @@ Documentation for the GenInit module available with the perldoc command.
 
   `perldoc lib/GenInit.pm`
 
-LICENSE AND COPYRIGHT
-=====================
-
-Copyright (C) 2012 Miguel Fonseca
+LICENSE
+=======
 
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
